@@ -1,0 +1,613 @@
+<html>
+<head>
+<!-- 190 min-->
+<!-- Created December 3rd 2016 by Dr. John Robertson, has Xboxes, Time of day, calendar, parse name, signature scripts, circle boxes, radio X boxes-->
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>adolescentinpatientunitInterhospital-Transfer-form</title>
+<style type="text/css" media="screen" >
+input {
+	-moz-box-sizing: content-box;
+	-webkit-print-color-adjust: exact;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box
+}
+ .sig {
+	border: 2px dotted blue;
+	color: Black;
+	background-color: transparent;
+ }
+    /* Drawing the 'gripper' for touch-enabled devices */
+    html.touch #content {
+        float:left;
+        width:92%;
+    }
+    html.touch #scrollgrabber {
+        float:right;
+        width:4%;
+        margin-right:2%;
+        background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAFCAAAAACh79lDAAAAAXNSR0IArs4c6QAAABJJREFUCB1jmMmQxjCT4T/DfwAPLgOXlrt3IwAAAABJRU5ErkJggg==)
+    }
+    html.borderradius #scrollgrabber {
+        border-radius: 1em;
+    }
+ </style>
+
+<style type="text/css" media="print">
+
+ .DoNotPrint {
+	display: none;
+ }
+ .noborder {
+	border : 0px;
+	background: transparent;
+	scrollbar-3dlight-color: transparent;
+	scrollbar-3dlight-color: transparent;
+	scrollbar-arrow-color: transparent;
+	scrollbar-base-color: transparent;
+	scrollbar-darkshadow-color: transparent;
+	scrollbar-face-color: transparent;
+	scrollbar-highlight-color: transparent;
+	scrollbar-shadow-color: transparent;
+	scrollbar-track-color: transparent;
+	background: transparent;
+	overflow: hidden;
+ }
+.sig {
+	border-style: solid;
+	border-color: transparent;
+	color: Black;
+	background-color: transparent;
+ }
+
+ </style>
+
+<!-- jQuery for greater functionality -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>if (typeof jQuery === 'undefined') {
+	document.write(unescape('%3Cscript%20src%3D%22../js/jquery-1.7.1.min.js%22%3E%3C/script%3E'));
+}
+</script>
+<script>if (typeof jQuery === 'undefined') {
+	document.write(unescape('%3Cscript%20src%3D%22jquery-1.7.1.min.js%22%3E%3C/script%3E'));
+}
+</script>
+<script language="javascript">
+function formPrint(){
+	window.print();
+} 
+</script>
+
+<!-- Freeform Signatures -->
+
+
+<!-- jSignature file for local testing outside of OSCAR -->
+<script type="text/javascript" src="jSignature.min.js"></script>
+
+<script type="text/javascript" src="${oscar_image_path}jSignature.min.js"></script>
+
+<!--[if lt IE 9]>
+<script type="text/javascript" src="${oscar_javascript_path}flashcanvas.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	$("#CanvasSignature1").jSignature({'decor-color':'#FFFFFF'})
+	$("#CanvasSignature2").jSignature({'decor-color':'#FFFFFF'})
+	var pdf = jQuery("input[name='pdfButton']");
+	if (pdf.size() != 0) {
+		pdf.attr('onclick', '').unbind('click');
+		pdf.attr('value', 'PDF');
+		pdf.click(function(){saveSig();submitPrintButton(false);});
+		}
+	var pdfSave = jQuery("input[name='pdfSaveButton']");
+	if (pdfSave.size() != 0) {
+		pdfSave.attr('onclick', '').unbind('click');
+		pdfSave.attr('value', 'Submit & PDF');
+		pdfSave.click(function(){saveSig();submitPrintButton(true);});
+		}
+})
+</script>
+
+<script type="text/javascript">
+function saveSig(){
+	var $sig=$("#CanvasSignature1");
+	var datapair=new Array();
+	datapair=$sig.jSignature("getData","base30");
+	document.getElementById("StoreSignature1").value=datapair.join(",");
+	var $sig=$("#CanvasSignature2");
+	var datapair=new Array();
+	datapair=$sig.jSignature("getData","base30");
+	document.getElementById("StoreSignature2").value=datapair.join(",");
+}
+function clearSig(){
+	$("#CanvasSignature1").jSignature("reset");
+	$("#CanvasSignature2").jSignature("reset");
+}
+function loadSig(){
+	var $sig=$("#CanvasSignature1");
+	var data
+	data=document.getElementById("StoreSignature1").value;
+	$sig.jSignature("setData","data:"+ data) ;
+	var $sig=$("#CanvasSignature2");
+	var data
+	data=document.getElementById("StoreSignature2").value;
+	$sig.jSignature("setData","data:"+ data) ;
+}
+</script>
+
+ 
+<script language="javascript" type="text/javascript">
+
+		function startUp() {
+
+			// Recircle circled elements
+			$('.circle_box').each(function(i, obj) {
+    			if (document.getElementById(obj.id + "_circled").value == "1")
+    				obj.style.borderWidth = '2px';
+			});
+		}
+ </script>
+<script type="text/javascript">
+		function change_border(x) {
+	//works to change function of circle_boxes to radio_boxes when the id of the radiobox is passed as x and is named in the convention name_X where X is a numeric value that appears in the string defined in scales
+		var scales = ["Yes",
+			"No"
+				  ];
+		var partA = x.substring(0, x.indexOf("_"));
+		var i = x.substring(x.indexOf("_"));
+		var j = i.substr(1);
+
+		for (var n in scales) {
+			if ( j == scales[n]) {
+				for (var m in scales){
+					if (m != n) { document.getElementById(partA+"_"+scales[m]+"_circled").value = '0';  document.getElementById(partA+"_"+scales[m]).style.borderWidth = '0px' }
+				}
+			}
+		}
+
+		
+			if (document.getElementById(x).style.borderWidth == '0px') {
+				document.getElementById(x).style.borderWidth = '2px';
+				document.getElementById(x + "_circled").value = "1";
+			} else {
+				document.getElementById(x).style.borderWidth = '0px';
+				document.getElementById(x + "_circled").value = "0";
+			}
+return false;		
+	}		
+</script>
+
+
+<!-- scripts to confirm closing of window if it hadnt been saved yet -->
+<script language="javascript">
+//keypress events trigger dirty flag
+var needToConfirm = false;
+document.onkeyup=setDirtyFlag;
+function setDirtyFlag(){
+	needToConfirm = true;
+}
+function releaseDirtyFlag(){
+	needToConfirm = false; //Call this function to prevent an alert.
+//this could be called when save button is clicked
+}
+window.onbeforeunload = confirmExit;
+function confirmExit(){
+	if (needToConfirm){
+		 return "You have attempted to leave this page. If you have made any changes to the fields without clicking the Save button, your changes will be lost. Are you sure you want to exit this page?";
+	 }
+}
+</script>
+
+<!-- scripts for Xbox functions -->
+<script language="javascript">
+$(document).ready(function() {
+	  $( ".Xbox" ).click(function() {
+		  var st = $( this ).val();
+		  if (st=="X") {
+			  $( this ).val("");
+		  } else {
+			  $( this ).val("X");
+		  }
+	});
+
+$( ".Xbox" ).keypress(function(event) {
+	  // any key press except tab will constitute a value change to the checkbox
+	  if (event.which != 0){
+		  $( this ).click();
+		  return false;
+		  }
+	});
+
+});
+
+	
+		function Radio_Box(x) {
+	//works to change function of X_boxes to radio_boxes when the id of the radiobox is passed as x and is named in the convention name_X where X appears in the string defined in scales
+		var scales = ["Yes", "No" ];
+		var partA = x.substring(0, x.indexOf("_"));
+		var i = x.substring(x.indexOf("_"));
+		var j = i.substr(1);
+
+		for (var n in scales) {
+			if ( j == scales[n]) {
+				for (var m in scales){
+					if (m != n) { document.getElementById(partA+"_"+scales[m]).value = ''; }
+				}
+			}
+		}
+return false;		
+	}		
+
+</script>
+
+
+<!-- Xbox styling -->
+<style type="text/css">
+	.box1 {
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		font-size: 10px;
+		border: 1px solid #000000;
+		cursor: pointer;
+		font-weight: bold;
+		text-align: center;
+		background: aquamarine;
+	}
+</style>
+    <script language="javascript">
+
+	function parseName() {
+		// Get the name
+		var fullName = document.getElementById("current_user_name").value;
+
+		// Split the value
+		var splitName = fullName.split(",");
+		var firstName = "";
+		var lastName  = "";
+
+		// Check for last name
+		if(splitName.length >= 1) {
+			lastName = splitName[0].trim();
+		}
+		if(splitName.length >= 2) {
+			firstName = splitName[1].trim();
+		}
+		var First_Last_Name = firstName + " " + lastName;
+
+		// Show the fields on the page
+		document.FormName.LastName1.value = lastName ;
+		document.FormName.firstName1.value = firstName ;
+		document.FormName.Physician.value = "Dr. " + First_Last_Name ;
+	}
+</script>
+
+<!-- main calendar program -->
+<script type="text/javascript" src="../share/calendar/calendar.js"></script>
+<script type="text/javascript" src="../share/calendar/lang/calendar-en.js"></script>
+<script type="text/javascript" src="../share/calendar/calendar-setup.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="../share/calendar/calendar.css" title="win2k-cold-1" />
+
+
+<!-----------------script for current time--------->
+<script language="javascript">
+
+<!-- hide javascript
+
+function StartClock12() {
+Time12 = new Date();
+Cur12Hour = Time12.getHours();
+Cur12Mins = Time12.getMinutes();
+The12Time = 0;
+The12Time = (Cur12Hour > 12) ? Cur12Hour - 12 : Cur12Hour;
+The12Time += ((Cur12Mins < 10) ? ':0' : ':') + Cur12Mins;
+The12Time += (Cur12Hour > 11) ? ' PM': ' AM';
+window.status = The12Time;
+setTimeout('StartClock12()',1000);
+}
+
+// done hiding -->
+</script> 
+
+
+<script type="text/javascript">
+function reImg(){
+// for stand alone development without uploading to OSCAR
+	var strLoc = window.location.href.toLowerCase();
+	if(strLoc.indexOf("https") == -1) {
+		var src1 = document.getElementById("BGImage1").src;
+		document.getElementById("BGImage1").src = src1.replace("$%7Boscar_image_path%7D","");
+		var src2 = document.getElementById("BGImage2").src;
+		document.getElementById("BGImage2").src = src2.replace("$%7Boscar_image_path%7D","");
+		var src3 = document.getElementById("BGImage3").src;
+		document.getElementById("BGImage3").src = src3.replace("$%7Boscar_image_path%7D","");
+	}
+}
+</script>
+</head>
+
+<body onload="startUp();reImg();loadSig(); StartClock12();parseName();">
+<form method="post" action="" name="FormName" id="FormName" >
+
+<!-- Hidden Inputs -->
+
+<input type="hidden" name="Referral_Yes_circled" id="Referral_Yes_circled" value="">
+<input type="hidden" name="Referral_No_circled" id="Referral_No_circled" value="">
+
+<input type="hidden" name="HeadLice_Yes_circled" id="HeadLice_Yes_circled" value="">
+<input type="hidden" name="HeadLice_No_circled" id="HeadLice_No_circled" value="">
+
+<input type="hidden" name="current_user_name" id="current_user_name" oscarDB=current_user>
+<input type="hidden" name="LastName1" id="LastName1" >
+<input type="hidden" name="firstName1" id="firstName1" >
+
+
+<div id="page1" style="page-break-after:always;position:relative;" >
+
+<img id="BGImage1" src="${oscar_image_path}adolescentinpatientunitInterhospital-Transfer-form-1.png" style="position: relative; left: 0px; top: 0px; width:750px">
+
+<textarea name="PatientInfo" id="PatientInfo" class="noborder" style="position:absolute; left:502px; top:0px; width:245px; height:110px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=label></textarea>
+
+<input name="HospitalAndUnit" id="HospitalAndUnit" type="text" class="noborder" style="position:absolute; left:130px; top:256px; width:268px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Physician" id="Physician" type="text" class="noborder" style="position:absolute; left:478px; top:256px; width:218px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=doctor>
+
+<input name="ClinicPhone" id="ClinicPhone" type="text" class="noborder" style="position:absolute; left:122px; top:298px; width:270px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=clinic_phone>
+
+<input name="ClinicFax" id="ClinicFax" type="text" class="noborder" style="position:absolute; left:451px; top:298px; width:242px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=clinic_fax>
+
+<input name="PatientName1" id="PatientName1" type="text" class="noborder" style="position:absolute; left:100px; top:338px; width:292px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=first_last_name>
+
+<input name="today" id="today" type="text" class="noborder" style="position:absolute; left:449px; top:338px; width:241px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=today>
+
+</div>
+
+
+<div id="page2" style="page-break-after:always;position:relative;" >
+
+<img id="BGImage2" src="${oscar_image_path}adolescentinpatientunitInterhospital-Transfer-form-2.png" style="position: relative; left: 0px; top: 0px; width:750px">
+
+<textarea name="PatientInformation2" id="PatientInformation2" class="noborder" style="position:absolute; left:502px; top:0px; width:245px; height:110px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=label></textarea>
+
+<input name="NickName" id="NickName" type="text" class="noborder" style="position:absolute; left:553px; top:114px; width:186px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" >
+
+<input name="Verified" id="Verified" type="text" class="Xbox box1" style=" left:67px; top:143px;" value="">
+
+<input name="Verified1" id="Verified1" type="text" class="noborder" style="position:absolute; left:307px; top:139px; width:207px; height:18px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Verified2" id="Verified2" type="text" class="noborder" style="position:absolute; left:547px; top:139px; width:191px; height:17px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="DateAdmitted" id="DateAdmitted" type="text" class="noborder" style="position:absolute; left:244px; top:162px; width:150px; height:18px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Age" id="Age" type="text" class="noborder" style="position:absolute; left:435px; top:162px; width:41px; height:18px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=age>
+
+<input name="EstimatedDate" id="EstimatedDate" type="text" class="noborder" style="position:absolute; left:240px; top:185px; width:155px; height:18px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Time" id="Time" type="text" class="noborder" style="position:absolute; left:418px; top:185px; width:62px; height:18px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" onClick="Time.value = The12Time;">
+
+<span name="Referral_Yes" id="Referral_Yes" type="text" class="circle_box" style="position:absolute; left:626px; top:180px; width:27px; height:16px; border:0px solid; cursor:pointer; background:transparent;"  onClick="change_border(this.id);"></span>
+
+<span name="Referral_No" id="Referral_No" type="text" class="circle_box" style="position:absolute; left:657px; top:180px; width:24px; height:16px; border:0px solid; cursor:pointer; background:transparent;"  onClick="change_border(this.id);"> <div class="DoNotPrint" id="Hint2" style="width:300px; color:darkgreen;"> &nbsp;  &nbsp; &nbsp; &nbsp; Click &quot;Yes&quot; or &quot;No&quot; to circle</div></span>
+
+<input name="Referral_Where" id="Referral_Where" type="text" class="noborder" style="position:absolute; left:593px; top:197px; width:145px; height:17px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="EquipmentRequired" id="EquipmentRequired" type="text" class="noborder" style="position:absolute; left:282px; top:216px; width:460px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Guardian1" id="Guardian1" type="text" class="noborder" style="position:absolute; left:249px; top:240px; width:257px; height:22px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Contact1" id="Contact1" type="text" class="noborder" style="position:absolute; left:571px; top:239px; width:169px; height:23px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Guardian2" id="Guardian2" type="text" class="noborder" style="position:absolute; left:247px; top:264px; width:259px; height:20px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Contact2" id="Contact2" type="text" class="noborder" style="position:absolute; left:569px; top:263px; width:170px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="ContactNotified" id="ContactNotified" type="text" class="Xbox box1" style=" left:67px; top:290px;" value="">
+
+<input name="Notification_Date" id="Notification_Date" type="text" class="noborder" style="position:absolute; left:249px; top:286px; width:138px; height:22px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Notification_Time" id="Notification_Time" type="text" class="noborder" style="position:absolute; left:411px; top:286px; width:62px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" onClick="Notification_Time.value = The12Time;">
+
+<input name="MCFD" id="MCFD" type="text" class="Xbox box1" style=" left:476px; top:290px;" value="" >
+
+<input name="MCFD_Specify" id="MCFD_Specify" type="text" class="noborder" style="position:absolute; left:603px; top:286px; width:137px; height:24px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="MCFD_Alert" id="MCFD_Alert" type="text" class="Xbox box1" style=" left:67px; top:313px;" value="">
+
+<input name="Residence_Foster" id="Residence_Foster" type="text" class="Xbox box1" style=" left:373px; top:313px;" value="">
+
+<input name="Residence_Parents" id="Residence_Parents" type="text" class="Xbox box1" style=" left:498px; top:313px;" value="">
+
+<input name="Residence_Other" id="Residence_Other" type="text" class="Xbox box1" style=" left:622px; top:313px;" value="">
+
+<input name="Diagnosis" id="Diagnosis" type="text" class="noborder" style="position:absolute; left:409px; top:350px; width:332px; height:18px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="InfectiousDiseases" id="InfectiousDiseases" type="text" class="noborder" style="position:absolute; left:393px; top:372px; width:152px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<span name="HeadLice_Yes" id="HeadLice_Yes" type="text" class="circle_box" style="position:absolute; left:619px; top:374px; width:32px; height:16px; border:0px solid; cursor:pointer; background:transparent;"  onClick="change_border(this.id);"></span>
+
+<span name="HeadLice_No" id="HeadLice_No" type="text" class="circle_box" style="position:absolute; left:657px; top:374px; width:19px; height:16px; border:0px solid; cursor:pointer; background:transparent;"  onClick="change_border(this.id);"> <div class="DoNotPrint" id="Hint4" style="width:300px; color:darkgreen;"> &nbsp;  &nbsp; &nbsp; &nbsp; Click &quot;Yes&quot; or &quot;No&quot; to circle</div></span>
+
+<input name="BP" id="BP" type="text" class="noborder" style="position:absolute; left:420px; top:394px; width:58px; height:18px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=m$BP#value>
+
+<input name="HR" id="HR" type="text" class="noborder" style="position:absolute; left:509px; top:393px; width:52px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=m$HR#value>
+
+<input name="RESP" id="RESP" type="text" class="noborder" style="position:absolute; left:604px; top:393px; width:47px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=m$RESP#value>
+
+<input name="Pulse" id="Pulse" type="text" class="noborder" style="position:absolute; left:695px; top:393px; width:48px; height:18px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=m$P#value>
+
+<input name="Substance" id="Substance" type="text" class="Xbox box1" style=" left:67px; top:417px;" value="">
+
+<input name="Substance_Name" id="Substance_Name" type="text" class="noborder" style="position:absolute; left:186px; top:414px; width:195px; height:23px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Consult" id="Consult" type="text" class="Xbox box1" style=" left:386px; top:417px;" value="">
+
+<input name="ConsultService" id="ConsultService" type="text" class="noborder" style="position:absolute; left:572px; top:414px; width:170px; height:22px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Allergies_Yes" id="Allergies_Yes" type="text" class="Xbox box1" style=" left:67px; top:440px;" value="" onClick="Radio_Box(this.id);">
+
+<input name="Allergies_Des" id="Allergies_Des" type="text" class="noborder" style="position:absolute; left:163px; top:438px; width:99px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" oscarDB=allergies_des_no_archived>
+
+<input name="Allergies_No" id="Allergies_No" type="text" class="Xbox box1" style=" left:267px; top:441px;" value="" onClick="Radio_Box(this.id);">
+
+<input name="MedicAlert" id="MedicAlert" type="text" class="Xbox box1" style=" left:324px; top:441px;" value="">
+
+<input name="Medic_Alerts" id="Medic_Alerts" type="text" class="noborder" style="position:absolute; left:474px; top:436px; width:264px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Suicidal" id="Suicidal" type="text" class="Xbox box1" style=" left:67px; top:483px;" value="">
+
+<input name="Active" id="Active" type="text" class="Xbox box1" style=" left:235px; top:483px;" value="">
+
+<input name="Suicidal_Date" id="Suicidal_Date" type="text" class="noborder" style="position:absolute; left:353px; top:481px; width:146px; height:22px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="In_History" id="In_History" type="text" class="Xbox box1" style=" left:513px; top:484px;" value="">
+
+<input name="Attempts" id="Attempts" type="text" class="Xbox box1" style=" left:640px; top:484px;" value="">
+
+<input name="Self_Injury" id="Self_Injury" type="text" class="Xbox box1" style=" left:67px; top:506px;" value="">
+
+<input name="SelfInjuryDescription" id="SelfInjuryDescription" type="text" class="noborder" style="position:absolute; left:158px; top:503px; width:583px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Aggression" id="Aggression" type="text" class="Xbox box1" style=" left:67px; top:528px;" value="">
+
+<input name="Physical" id="Physical" type="text" class="Xbox box1" style=" left:171px; top:528px;" value="">
+
+<input name="Verbal" id="Verbal" type="text" class="Xbox box1" style=" left:265px; top:528px;" value="">
+
+<input name="Homicidal" id="Homicidal" type="text" class="Xbox box1" style=" left:347px; top:528px;" value="">
+
+<input name="Psychosis" id="Psychosis" type="text" class="Xbox box1" style=" left:67px; top:549px;" value="">
+
+<input name="Delusions" id="Delusions" type="text" class="Xbox box1" style=" left:203px; top:549px;" value="">
+
+<input name="Halucinations" id="Halucinations" type="text" class="Xbox box1" style=" left:299px; top:549px;" value="">
+
+<input name="SpecifyHalucinations" id="SpecifyHalucinations" type="text" class="noborder" style="position:absolute; left:476px; top:546px; width:264px; height:24px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Elopement" id="Elopement" type="text" class="Xbox box1" style=" left:67px; top:572px;" value="">
+
+<input name="Other_Precautions" id="Other_Precautions" type="text" class="noborder" style="position:absolute; left:415px; top:571px; width:324px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Seclusion" id="Seclusion" type="text" class="Xbox box1" style=" left:67px; top:594px;" value="">
+
+<input name="Seclusion_Date" id="Seclusion_Date" type="text" class="noborder" style="position:absolute; left:262px; top:587px; width:148px; height:25px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Seclusion_Description" id="Seclusion_Description" type="text" class="noborder" style="position:absolute; left:413px; top:593px; width:328px; height:20px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="1To1" id="1To1" type="text" class="Xbox box1" style=" left:263px; top:617px;" value="">
+
+<input name="Constant" id="Constant" type="text" class="Xbox box1" style=" left:394px; top:617px;" value="">
+
+<input name="Other_Observation" id="Other_Observation" type="text" class="Xbox box1" style=" left:511px; top:617px;" value="">
+
+<input name="Other_Observation_Level" id="Other_Observation_Level" type="text" class="noborder" style="position:absolute; left:665px; top:615px; width:73px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="ReasonForLevel" id="ReasonForLevel" type="text" class="noborder" style="position:absolute; left:255px; top:636px; width:486px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Medication_NA" id="Medication_NA" type="text" class="Xbox box1" style=" left:686px; top:662px;" value="">
+
+<input name="LastScheduled" id="LastScheduled" type="text" class="Xbox box1" style=" left:76px; top:683px;" value="">
+
+<input name="LastMedication" id="LastMedication" type="text" class="noborder" style="position:absolute; left:355px; top:681px; width:387px; height:22px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="NextMedication" id="NextMedication" type="text" class="Xbox box1" style=" left:169px; top:705px;" value="">
+
+<input name="DoseDue" id="DoseDue" type="text" class="noborder" style="position:absolute; left:355px; top:705px; width:386px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="LastPRN" id="LastPRN" type="text" class="Xbox box1" style=" left:76px; top:729px;" value="">
+
+<input name="PRN1Name" id="PRN1Name" type="text" class="noborder" style="position:absolute; left:322px; top:727px; width:204px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="PRN1Time" id="PRN1Time" type="text" class="noborder" style="position:absolute; left:548px; top:727px; width:60px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  onClick="PRN1Time.value = The12Time;">
+
+<input name="PRN1Date" id="PRN1Date" type="text" class="noborder" style="position:absolute; left:612px; top:726px; width:125px; height:21px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="PRN2Name" id="PRN2Name" type="text" class="noborder" style="position:absolute; left:321px; top:748px; width:202px; height:20px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="PRN2Time" id="PRN2Time" type="text" class="noborder" style="position:absolute; left:548px; top:752px; width:60px; height:15px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  onClick="PRN2Time.value = The12Time;">
+
+<input name="PRN2_Date" id="PRN2_Date" type="text" class="noborder" style="position:absolute; left:612px; top:750px; width:125px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="PRN3Name" id="PRN3Name" type="text" class="noborder" style="position:absolute; left:321px; top:770px; width:200px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="PRN3Time" id="PRN3Time" type="text" class="noborder" style="position:absolute; left:548px; top:770px; width:60px; height:18px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  onClick="PRN3Time.value = The12Time;">
+
+<input name="PRN3_Date" id="PRN3_Date" type="text" class="noborder" style="position:absolute; left:612px; top:771px; width:125px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Certification_Yes" id="Certification_Yes" type="text" class="Xbox box1" style=" left:236px; top:817px;" value="" onClick="Radio_Box(this.id);">
+
+<input name="Certification_No" id="Certification_No" type="text" class="Xbox box1" style=" left:237px; top:839px;" value="" onClick="Radio_Box(this.id);">
+
+<input name="Voluntary_No" id="Voluntary_No" type="text" class="Xbox box1" style=" left:300px; top:817px;" value="" onClick="Radio_Box(this.id);">
+
+<input name="Form13_Yes" id="Form13_Yes" type="text" class="Xbox box1" style=" left:574px; top:817px;" value="" onClick="Radio_Box(this.id);">
+
+<input name="Voluntary_Yes" id="Voluntary_Yes" type="text" class="Xbox box1" style=" left:301px; top:839px;" value="" onClick="Radio_Box(this.id);">
+
+<input name="Form13_No" id="Form13_No" type="text" class="Xbox box1" style=" left:575px; top:838px;" value="" onClick="Radio_Box(this.id);">
+
+<div id="CanvasSignature1" class="sig" style="position:absolute; left:290px; top:862px; width:230px; height:30; z-index:10;">
+	</div>
+
+	<input type="hidden" name="StoreSignature1" id="StoreSignature1" value="">
+
+	<div id="CanvasSignature2" class="sig" style="position:absolute; left:291px; top:915px; width:230px; height:30; z-index:10;">
+	</div>
+
+	<input type="hidden" name="StoreSignature2" id="StoreSignature2" value="">
+
+<input name="InitiationTime1" id="InitiationTime1" type="text" class="noborder" style="position:absolute; left:548px; top:873px; width:60px; height:24px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  onClick="InitiationTime1.value = The12Time;">
+
+<input name="Initiation_Date_1" id="Initiation_Date_1" type="text" class="noborder" style="position:absolute; left:613px; top:874px; width:129px; height:22px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+<input name="Received_Time_1" id="Received_Time_1" type="text" class="noborder" style="position:absolute; left:548px; top:917px; width:60px; height:20px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" onClick="Received_Time_1.value = The12Time;">
+
+<input name="Received_Date_1" id="Received_Date_1" type="text" class="noborder" style="position:absolute; left:613px; top:917px; width:130px; height:19px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" value="">
+
+</div>
+
+<div id="page3" style="page-break-after:always;position:relative;" >
+
+<img id="BGImage3" src="${oscar_image_path}adolescentinpatientunitInterhospital-Transfer-form-3.png" style="position: relative; left: 0px; top: 0px; width:750px">
+
+<textarea name="PatientInformation3" id="PatientInformation3" class="noborder" style="position:absolute; left:502px; top:0px; width:245px; height:110px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;"  oscarDB=label></textarea>
+
+<textarea name="Page3Notes" id="Page3Notes" class="noborder" style="position:absolute; left:10px; top:120px; width:735px; height:850px; font-family:sans-serif; font-style:normal; font-weight:normal; font-size:14px; text-align:left; background-color:transparent;" ></textarea>
+</div>
+
+
+ <div class="DoNotPrint" id="BottomButtons" style="position: absolute; top:2966px; left:0px;">
+	 <table><tr><td>
+		 Subject: <input name="subject" size="40" type="text">
+		<input value="Submit" name="SubmitButton" id="SubmitButton" type="submit" onclick=" saveSig(); releaseDirtyFlag();"> 
+		<input value="Save Sig" name="SaveSigButton" id="SaveSigButton" type="button" onclick="saveSig();"> 
+		<input value="Clear Sig" name="ClearButton" id="ClearButton" type="button" onclick="clearSig();"> 
+			<input value="Reset" name="ResetButton" id="ResetButton" type="reset"> 
+			<input value="Print" name="PrintButton" id="PrintButton" type="button" onclick="formPrint();"> 
+			<input value="Print & Submit" name="PrintSubmitButton" id="PrintSubmitButton" type="button" onclick="formPrint();releaseDirtyFlag();setTimeout('SubmitButton.click()',5000);"> 
+	 </td></tr></table>
+ 
+ <!-- Copy Left -->
+ 
+ <a rel="liscence" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US" target="blank"><img alt="Creative Commons License" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png"/></a><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">created Dec 3<sup>rd</sup> 2016 by Dr. John Robertson, </span>licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US" target="_blank">GPL</a>. <span style="color:forestgreen;">Please consider supporting  </span> <a  href="https://oscar-emr.com/support-oscar/" target="_blank" >OSCAR EMR Canada</a> <span style="color:forestgreen;"> and/or  </span> <a  href="http://oscarbc.ca/" target="_blank" >OSCAR BC</a><br>
+ </div>
+ </form>
+
+
+<!-- Define Date Calendars -->
+<script type="text/javascript">DateAdmitted
+	Calendar.setup( { inputField : "today", ifFormat : "%m-%d-%y mm-dd-yy",  button : "today" } );
+	Calendar.setup( { inputField : "DateAdmitted", ifFormat : "%m-%d-%y mm-dd-yy",  button : "DateAdmitted" } );
+	Calendar.setup( { inputField : "EstimatedDate", ifFormat : "%m-%d-%y mm-dd-yy",  button : "EstimatedDate" } );
+	Calendar.setup( { inputField : "Notification_Date", ifFormat : "%m-%d-%y mm-dd-yy",  button : "Notification_Date" } );
+	Calendar.setup( { inputField : "Suicidal_Date", ifFormat : "%m-%d-%y mm-dd-yy",  button : "Suicidal_Date" } );
+	Calendar.setup( { inputField : "Seclusion_Date", ifFormat : "%m-%d-%y mm-dd-yy",  button : "Seclusion_Date" } );
+	Calendar.setup( { inputField : "PRN1Date", ifFormat : "%m-%d-%y mm-dd-yy",  button : "PRN1Date" } );
+	Calendar.setup( { inputField : "PRN2_Date", ifFormat : "%m-%d-%y mm-dd-yy",  button : "PRN2_Date" } );
+	Calendar.setup( { inputField : "PRN3_Date", ifFormat : "%m-%d-%y mm-dd-yy",  button : "PRN3_Date" } );
+	Calendar.setup( { inputField : "Initiation_Date_1", ifFormat : "%m-%d-%y mm-dd-yy",  button : "Initiation_Date_1" } );
+	Calendar.setup( { inputField : "Received_Date_1", ifFormat : "%m-%d-%y mm-dd-yy",  button : "Received_Date_1" } );
+</script>
+
+</body>
+</html>
